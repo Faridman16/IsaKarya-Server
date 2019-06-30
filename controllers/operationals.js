@@ -3,9 +3,19 @@ const db = require('../models');
 module.exports = {
     getAllOP : (req, res) => {
         db.sequelize.query("SELECT * FROM OPERATIONALS").then(([results, metadata]) => {
-            res.status(200).send({
-                message: results,
+            res.status(200).send(results);
+        })
+        .catch((err)=> {
+            res.status(500).send({
+                message: err,
             });
+        });        
+    },
+
+    getOP7 : (req, res) => {
+        console.log('this is called');
+        db.sequelize.query("SELECT * FROM OPERATIONALS ORDER BY tanggal DESC LIMIT 7").then(([results, metadata]) => {
+            res.status(200).send(results);
         })
         .catch((err)=> {
             res.status(500).send({
